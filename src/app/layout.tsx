@@ -25,8 +25,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4`}
       >
+        <header>
+          <div className="flex flex-col items-center justify-center gap-4 p-6">
+            <h1 className="text-xl font-bold text-center">
+              Leading companies in the field of AI
+            </h1>
+            <h2>
+              Aidan Daly's Vercel Coding Challenge
+            </h2>
+          </div>
+        </header>
         {children}
       </body>
     </html>
