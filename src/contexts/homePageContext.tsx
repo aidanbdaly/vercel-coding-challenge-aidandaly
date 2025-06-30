@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { createContext, useLayoutEffect, useState } from "react";
 
 export const MAIN_TABS = [
     { name: "Company", id: "company" },
@@ -15,9 +15,7 @@ export const SECONDARY_TABS = [
     { name: "Contact", id: "contact" },
 ] as const;
 
-const TABS = [...MAIN_TABS, ...SECONDARY_TABS] as const;
-
-type Tab = (typeof TABS)[number]["id"];
+type Tab = (typeof MAIN_TABS[number] | typeof SECONDARY_TABS[number])["id"];
 
 const HomePageContext = createContext<{
     selectedTab: string;

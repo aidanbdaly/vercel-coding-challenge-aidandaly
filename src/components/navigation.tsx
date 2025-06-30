@@ -9,8 +9,7 @@ export function Navigation({ ...props }: NavigationProps): ReactElement {
     const { selectedTab, setSelectedTab } = useHomePageContext();
 
     return (
-        <nav className="w-56 shrink-0 border-r border-gray-200
-                    flex flex-col justify-between px-4 py-6">
+        <nav className="w-56 shrink-0 border-r border-gray-200 flex flex-col justify-between px-4 py-6" {...props}>
             <div className="space-y-2">
                 {MAIN_TABS.map((t) => (
                     <Tab key={t.id} tab={t} active={selectedTab === t.id}
