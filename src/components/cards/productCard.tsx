@@ -2,9 +2,9 @@ import { Product } from "@/types";
 
 type ProductCardProps = {
     product: Product;  
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, ...props }) => {
     const {
         Name,
         Category,
@@ -18,7 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     } = product;
 
     return (
-        <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm">
+        <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm" {...props}>
             <header className="space-y-1">
                 <h4 className="text-xl font-semibold text-black">{Name}</h4>
                 <p className="text-sm text-gray-600">{Category}</p>

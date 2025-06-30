@@ -1,6 +1,4 @@
-import { Navigation } from "@/components";
 import { ContentManager } from "@/components/contentManager";
-import { HomePageProvider } from "@/contexts/homePageContext";
 
 import { StartupData } from "@/types";
 
@@ -12,12 +10,5 @@ export default async function Home() {
 
   const data: StartupData = await response.json();
 
-  return (
-    <HomePageProvider>
-      <div className="flex gap-4">
-        <Navigation />
-        <ContentManager data={data} />
-      </div>
-    </HomePageProvider>
-  );
+  return <ContentManager data={data} className="h-full" />
 }

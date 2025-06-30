@@ -1,42 +1,48 @@
 "use client";
 
-import { TABS, useHomePageContext } from "@/contexts/homePageContext";
-import { ReactElement, useEffect } from "react";
+import { MAIN_TABS, SECONDARY_TABS, useHomePageContext } from "@/contexts/homePageContext";
+import { ReactElement } from "react";
 
-type NavigationProps = {
-    title?: string;
-    subtitle?: string;
-    onTabChange?: (tab: string) => void;
-} & React.HTMLAttributes<HTMLDivElement>;
+type NavigationProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function Navigation({ ...props }: NavigationProps): ReactElement {
-
     const { selectedTab, setSelectedTab } = useHomePageContext();
 
-    useEffect(() => {
-        const hash = window.location.hash.slice(1);
-
-        const tab = TABS.find((t) => t.id === hash);
-
-        if (tab) setSelectedTab(tab.id);
-    }, []);
-
     return (
+        <nav className="w-56 shrink-0 border-r border-gray-200
+                    flex flex-col justify-between px-4 py-6">
+            <div className="space-y-2">
+                {MAIN_TABS.map((t) => (
+                    <Tab key={t.id} tab={t} active={selectedTab === t.id}
+                        onClick={() => setSelectedTab(t.id)} />
+                ))}
+            </div>
 
-        <nav className="flex flex-col justify-center gap-4 bg-white-800 px-4 h-full">
-            {TABS.map((tab) => (
-                <a
-                    key={tab.id}
-                    href={`#${tab.id}`}
-                    onClick={() => setSelectedTab(tab.id)}
-                    className={`px-4 py-2 text-sm font-medium w-[200px] hover:text-gray-900 border-1 hover:bg-gray-300 rounded-sm transition-colors duration-200 ${selectedTab === tab.id
-                        ? "bg-white text-black"
-                        : "bg-transparent text-white"
-                        }`}
-                >
-                    {tab.name}
-                </a>
-            ))}
+            <div className="space-y-2">
+                <hr className="border-gray-200" />
+                {SECONDARY_TABS.map((t) => (
+                    <Tab key={t.id} tab={t} active={selectedTab === t.id}
+                        onClick={() => setSelectedTab(t.id)} />
+                ))}
+            </div>
         </nav>
-    )
-}
+    );
+};
+
+const Tab = ({
+    tab,
+    active,
+    onClick,
+}: {
+    tab: { id: string; name: string };
+    active: boolean;
+    onClick: () => void;
+}) => (
+    <button
+        onClick={onClick}
+        className={`block rounded px-4 py-2 text-sm transition-colors text-left w-full cursor-pointer
+                ${active ? "bg-black text-white" : "text-black hover:bg-gray-200"}`}
+    >
+        {tab.name}
+    </button>
+);

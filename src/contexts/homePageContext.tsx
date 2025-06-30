@@ -1,8 +1,8 @@
 "use client"
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useLayoutEffect, useState } from "react";
 
-export const TABS = [
+export const MAIN_TABS = [
     { name: "Company", id: "company" },
     { name: "Employees", id: "employees" },
     { name: "Products", id: "products" },
@@ -11,6 +11,12 @@ export const TABS = [
     { name: "Recent News", id: "recent-news" },
 ] as const;
 
+export const SECONDARY_TABS = [
+    { name: "Contact", id: "contact" },
+] as const;
+
+const TABS = [...MAIN_TABS, ...SECONDARY_TABS] as const;
+
 type Tab = (typeof TABS)[number]["id"];
 
 const HomePageContext = createContext<{
@@ -18,8 +24,20 @@ const HomePageContext = createContext<{
     setSelectedTab: ((tab: Tab) => void);
 } | null>(null);
 
-export const HomePageProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const [selectedTab, setSelectedTab] = useState<Tab>("company");
+type HomePageProviderProps = {
+    readonly defaultTab: Tab;
+};
+
+export const HomePageProvider: React.FC<React.PropsWithChildren<HomePageProviderProps>> = ({ children, defaultTab }) => {
+    const [selectedTab, setSelectedTab] = useState<Tab>(defaultTab);
+
+    useLayoutEffect(() => {
+        const hash = window.location.hash.slice(1);
+
+        const tab = [...MAIN_TABS, ...SECONDARY_TABS].find((t) => t.id === hash);
+
+        if (tab) setSelectedTab(tab.id);
+    }, []);
 
     return (
         <HomePageContext.Provider value={{ selectedTab, setSelectedTab }}>

@@ -2,15 +2,16 @@ import { Department } from "@/types";
 
 type DepartmentCardProps = {
     readonly department: Department;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const DepartmentCard: React.FC<DepartmentCardProps> = ({
     department,
+    ...props
 }) => {
     const { Name, HeadCount, Lead, Budget, Goals } = department;
 
     return (
-        <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm">
+        <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm" {...props}>
             <header>
                 <h4 className="text-xl font-semibold text-black">{Name}</h4>
                 <p className="text-sm text-gray-600">

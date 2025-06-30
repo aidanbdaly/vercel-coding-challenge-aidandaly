@@ -2,10 +2,11 @@ import { Testimonial } from "@/types";
 
 export type TestimonialCardProps = {
     readonly testimonial: Testimonial;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({
     testimonial,
+    ...props
 }) => {
     const {
         Customer,
@@ -21,6 +22,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
         <article
             className={`flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm ${Featured ? "ring-2 ring-gray-900" : ""
                 }`}
+            {...props}
         >
             <p className="text-sm text-gray-800">&ldquo;{Content}&rdquo;</p>
 

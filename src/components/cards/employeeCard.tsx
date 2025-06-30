@@ -1,9 +1,11 @@
 import { Employee } from "@/types";
 
-type EmployeeCardProps = Employee;
+type EmployeeCardProps = {
+    readonly employee: Employee;
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const EmployeeCard: React.FC<EmployeeCardProps> = (employee) => (
-    <article className="flex flex-col gap-3 rounded-lg border border-gray-300 bg-white p-5 shadow-sm">
+export const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, ...props }) => (
+    <article className="flex flex-col gap-3 rounded-lg border border-gray-300 bg-white p-5 shadow-sm" {...props}>
         <header>
             <h4 className="text-lg font-semibold text-black">
                 {employee.FirstName} {employee.LastName}

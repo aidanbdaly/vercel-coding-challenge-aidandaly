@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/header";
+import { Navigation } from "@/components";
+import { HomePageProvider } from "@/contexts/homePageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,22 +25,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4`}
-      >
-        <header>
-          <div className="flex flex-col items-center justify-center gap-4 p-6">
-            <h1 className="text-xl font-bold text-center">
-              Leading companies in the field of AI
-            </h1>
-            <h2>
-              Aidan Daly's Vercel Coding Challenge
-            </h2>
-          </div>
-        </header>
-        {children}
+    <html lang="en" className="h-full">
+      <body className={`${geistSans.variable} ${geistMono.variable} flex h-full flex-col bg-white antialiased`}>
+        <Header />
+        <div className="flex flex-1 overflow-hidden">
+          <HomePageProvider defaultTab="company">
+            <Navigation />
+            <div className="flex-1 overflow-hidden">
+              {children}
+            </div>
+          </HomePageProvider>
+        </div>
       </body>
     </html>
   );

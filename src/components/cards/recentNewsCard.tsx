@@ -2,13 +2,13 @@ import { NewsItem } from "@/types";
 
 type RecentNewsCardProps = {
   readonly news: NewsItem;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const RecentNewsCard: React.FC<RecentNewsCardProps> = ({ news }) => {
+export const RecentNewsCard: React.FC<RecentNewsCardProps> = ({ news, ...props }) => {
   const { Title, Date: DateString, Summary } = news;
 
   return (
-    <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm">
+    <article className="flex flex-col gap-4 rounded-lg border border-gray-300 bg-white p-6 shadow-sm" {...props}>
       <h4 className="text-lg font-semibold text-black">{Title}</h4>
       <time
         dateTime={DateString}

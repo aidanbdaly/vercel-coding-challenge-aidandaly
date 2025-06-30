@@ -27,10 +27,11 @@ type CompanyCardProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({
-    company
+    company,
+    ...props
 }) => {
     return (
-        <section className="max-w-full rounded-lg border border-gray-300 bg-white shadow-sm">
+        <section className="max-w-full rounded-lg border border-gray-300 bg-white shadow-sm" {...props}>
             <header className="border-b border-gray-200 px-6 py-4">
                 <h2 className="text-2xl font-semibold text-black">{company.Name}</h2>
                 <p className="text-sm text-gray-600">
