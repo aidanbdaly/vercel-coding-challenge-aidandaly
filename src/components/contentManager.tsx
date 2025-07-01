@@ -18,6 +18,7 @@ import type {
     NewsItem,
 } from "@/types";
 import { ReactElement, useMemo } from "react";
+import { ContactCard } from "./cards/contactCard";
 
 const Grid: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -82,11 +83,15 @@ const viewFactory = (data: StartupData) =>
                 ))}
             </Grid>
         ),
+
+        "contact": () => (
+            <ContactCard />
+        ),
     }) as Record<string, () => ReactElement>;
 
 export function ContentManager({
     data,
-    className = "",
+    className,
     ...props
 }: ContentManagerProps) {
     const { selectedTab } = useHomePageContext();

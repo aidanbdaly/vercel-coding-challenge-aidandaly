@@ -1,3 +1,22 @@
+export const MAIN_TABS = [
+  { name: "Company", id: "company" },
+  { name: "Employees", id: "employees" },
+  { name: "Products", id: "products" },
+  { name: "Testimonials", id: "testimonials" },
+  { name: "Departments", id: "departments" },
+  { name: "Recent News", id: "recent-news" },
+] as const;
+
+export const SECONDARY_TABS = [
+  { name: "Contact", id: "contact" },
+] as const;
+
+export type Tab = (typeof MAIN_TABS[number] | typeof SECONDARY_TABS[number])["id"];
+
+export const isTab = (tab: string): tab is Tab => {
+  return MAIN_TABS.some(t => t.id === tab) || SECONDARY_TABS.some(t => t.id === tab);
+}
+
 export interface StartupData {
   Company: Company;
   Employees: Employee[];
@@ -5,7 +24,7 @@ export interface StartupData {
   Testimonials: Testimonial[];
   Departments: Department[];
   RecentNews: NewsItem[];
-  LastGenerated: string; 
+  LastGenerated: string;
   DataVersion: string;
 }
 
@@ -50,13 +69,13 @@ export interface Employee {
   Title: string;
   Department: string;
   Location: string;
-  StartDate: string; 
+  StartDate: string;
   Skills: string[];
   Biography: string;
   AvailableForMeeting: boolean;
   LinkedIn: string;
-  GitHub: string; 
-  LastUpdated: string; 
+  GitHub: string;
+  LastUpdated: string;
   ID: string;
 }
 

@@ -1,21 +1,8 @@
 "use client"
 
-import React, { createContext, useLayoutEffect, useState } from "react";
-
-export const MAIN_TABS = [
-    { name: "Company", id: "company" },
-    { name: "Employees", id: "employees" },
-    { name: "Products", id: "products" },
-    { name: "Testimonials", id: "testimonials" },
-    { name: "Departments", id: "departments" },
-    { name: "Recent News", id: "recent-news" },
-] as const;
-
-export const SECONDARY_TABS = [
-    { name: "Contact", id: "contact" },
-] as const;
-
-type Tab = (typeof MAIN_TABS[number] | typeof SECONDARY_TABS[number])["id"];
+import { Tab } from "@/types";
+import { useRouter } from "next/navigation";
+import React, { createContext, useEffect, useState } from "react";
 
 const HomePageContext = createContext<{
     selectedTab: string;
@@ -29,13 +16,16 @@ type HomePageProviderProps = {
 export const HomePageProvider: React.FC<React.PropsWithChildren<HomePageProviderProps>> = ({ children, defaultTab }) => {
     const [selectedTab, setSelectedTab] = useState<Tab>(defaultTab);
 
-    useLayoutEffect(() => {
-        const hash = window.location.hash.slice(1);
+    const router = useRouter();
 
-        const tab = [...MAIN_TABS, ...SECONDARY_TABS].find((t) => t.id === hash);
+    useEffect(() => {
+        const newSearchParams = new URLSearchParams(window.location.search);
 
-        if (tab) setSelectedTab(tab.id);
-    }, []);
+        if (newSearchParams.get("tab") !== selectedTab) {
+            newSearchParams.set("tab", selectedTab);
+            router.replace(`?${newSearchParams.toString()}`, { scroll: false });
+        }
+    }, [selectedTab, router]);
 
     return (
         <HomePageContext.Provider value={{ selectedTab, setSelectedTab }}>

@@ -1,6 +1,7 @@
 "use client";
 
-import { MAIN_TABS, SECONDARY_TABS, useHomePageContext } from "@/contexts/homePageContext";
+import { useHomePageContext } from "@/contexts/homePageContext";
+import { MAIN_TABS, SECONDARY_TABS } from "@/types";
 import { ReactElement } from "react";
 
 type NavigationProps = React.HTMLAttributes<HTMLDivElement>;

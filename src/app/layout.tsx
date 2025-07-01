@@ -31,12 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} flex h-full flex-col bg-white antialiased`}>
         <Header />
         <div className="flex flex-1 overflow-hidden">
-          <HomePageProvider defaultTab="company">
-            <Navigation />
-            <div className="flex-1 overflow-hidden">
-              {children}
-            </div>
-          </HomePageProvider>
+          {children}
         </div>
       </body>
     </html>
