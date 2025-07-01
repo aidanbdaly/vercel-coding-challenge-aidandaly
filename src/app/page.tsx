@@ -5,8 +5,8 @@ import { HomePageProvider } from "@/contexts/homePageContext";
 import { isTab, StartupData } from "@/types";
 
 type PageProps = {
-  searchParams?: { tab?: string }  
-} & Record<string, unknown>;      
+  searchParams?: { tab?: string }
+}
 
 export default async function Home({ searchParams }: PageProps) {
   const response = await fetch("https://v0-next-js-startup-api.vercel.app/api/startup-data", {
