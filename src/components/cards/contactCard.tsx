@@ -1,9 +1,19 @@
+"use client";
+
+import { useState } from "react";
+
 export const ContactCard: React.FC<
     React.HTMLAttributes<HTMLFormElement>
 > = ({ ...props }) => {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        setLoading(true);
 
         const formData = new FormData(e.currentTarget);
 
@@ -17,6 +27,17 @@ export const ContactCard: React.FC<
                 email: formData.get("email"),
                 message: formData.get("message"),
             }),
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error("Failed to send message");
+            }
+            return response.json();
+        }).then(() => {
+            setSuccess(true);
+        }).catch((err) => {
+            setError(err.message);
+        }).finally(() => {
+            setLoading(false);
         });
     };
 
@@ -67,10 +88,14 @@ export const ContactCard: React.FC<
 
                 <button
                     type="submit"
+                    disabled={loading}
                     className="rounded bg-blue-600 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                 >
                     Send Message
                 </button>
+
+                {error && <p className="text-sm text-red-600">Error: {error}</p>}
+                {success && <p className="text-sm text-green-600">Message sent successfully!</p>}
             </form>
         </article>
     );
