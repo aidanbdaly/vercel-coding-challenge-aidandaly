@@ -5,7 +5,9 @@ import { HomePageProvider } from "@/contexts/homePageContext";
 import { isTab, StartupData } from "@/types";
 
 type PageProps = {
-  searchParams?: { tab?: string }
+  searchParams: Promise<{
+    tab?: string;
+  }>
 }
 
 export default async function Home({ searchParams }: PageProps) {
@@ -15,7 +17,7 @@ export default async function Home({ searchParams }: PageProps) {
 
   const data: StartupData = await response.json();
 
-  const tabParam = searchParams?.tab;
+  const tabParam = await searchParams.then(params => params.tab);
   const tab = tabParam && isTab(tabParam) ? tabParam : "company";
 
   return (
